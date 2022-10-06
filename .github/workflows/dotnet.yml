@@ -1,0 +1,28 @@
+name: dotnet
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.0.x
+    - name: Verify formatting
+      run: dotnet format --verify-no-changes
+    - name: Build
+      run: dotnet publish -r linux-x64 --self-contained -p:PublishSingleFile=true  -p:EnableCompressionInSingleFile=true --configuration Release
+    - name: Upload the executable as artifact
+      uses: actions/upload-artifact@v3.1.0
+      with:
+        name: saml-md-tool
+        path: SamlMdTool/bin/Release/net6.0/linux-x64/publish/saml-md-tool
