@@ -37,7 +37,7 @@ dumpPemCmd.SetHandler((source, serial) =>
     },
     sourceArgument, certSerialArgument);
 
-var cmd = new RootCommand("SamlMdTool");
+var cmd = new RootCommand("SAML metadata tool");
 cmd.AddCommand(listCmd);
 cmd.AddCommand(dumpPemCmd);
 
