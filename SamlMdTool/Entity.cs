@@ -65,6 +65,6 @@ public class Entity
         XNamespace ds = "http://www.w3.org/2000/09/xmldsig#";
         XElement metadata = XElement.Load(source);
 
-        return metadata.Descendants(md + "EntityDescriptor").Select(e => FromElement(e, ds, md)).ToArray();
+        return metadata.DescendantsAndSelf(md + "EntityDescriptor").Select(e => FromElement(e, ds, md)).ToArray();
     }
 }

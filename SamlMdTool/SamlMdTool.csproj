@@ -6,6 +6,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <AssemblyName>saml-md-tool</AssemblyName>
+        <Version>1.0.1</Version>
     </PropertyGroup>
 
     <ItemGroup>
