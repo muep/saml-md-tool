@@ -22,6 +22,6 @@ portable executable:
     dotnet publish                            \
         --use-current-runtime                 \
         --self-contained                      \
-        -p:PublishSingleFile=true             \ 
+        -p:PublishSingleFile=true             \
         -p:EnableCompressionInSingleFile=true \
         --configuration Release
