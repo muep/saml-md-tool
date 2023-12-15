@@ -5,18 +5,11 @@ namespace SamlMdTool;
 
 public class Entity
 {
-    public string EntityId { get; private set; }
-    public string Name { get; private set; }
-    public string[] SsoCertificates { get; private set; }
+    public string EntityId { get; private init; } = "";
+    private string Name { get; init; } = "";
+    public string[] SsoCertificates { get; private init; } = Array.Empty<string>();
 
-    public Entity()
-    {
-        EntityId = "";
-        Name = "";
-        SsoCertificates = new string[] { };
-    }
-
-    public X509Certificate2[] ParsedCertificates()
+    public IEnumerable<X509Certificate2> ParsedCertificates()
     {
         return SsoCertificates.Select(
                 s => X509Certificate2.CreateFromPem(new ReadOnlySpan<char>(s.ToCharArray()))
@@ -27,7 +20,7 @@ public class Entity
     public override string ToString()
     {
         return "Entity " + EntityId + "\n" + " org: " + Name + "\n" +
-               string.Join("\n", ParsedCertificates().Select(c => CertDesc(c)));
+               string.Join("\n", ParsedCertificates().Select(CertDesc));
     }
 
     private static string CertDesc(X509Certificate2 cert)
