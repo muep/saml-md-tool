@@ -7,22 +7,36 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
-
+  build-linux:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v2
-      with:
-        dotnet-version: 6.0.x
-    - name: Verify formatting
-      run: dotnet format --verify-no-changes
-    - name: Build
-      run: dotnet publish -r linux-x64 --self-contained -p:PublishSingleFile=true  -p:EnableCompressionInSingleFile=true --configuration Release
-    - name: Upload the executable as artifact
-      uses: actions/upload-artifact@v3.1.0
-      with:
-        name: saml-md-tool
-        path: SamlMdTool/bin/Release/net6.0/linux-x64/publish/saml-md-tool
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: 8.0.x
+      - name: Verify formatting
+        run: dotnet format --verify-no-changes
+      - name: Build
+        run: dotnet publish SamlMdTool -r linux-x64  -p:PublishAOT=true -p:AssemblyName=saml-md-tool --configuration Release
+      - name: Upload the executable as artifact
+        uses: actions/upload-artifact@v3.1.0
+        with:
+          name: saml-md-tool
+          path: SamlMdtool/bin/Release/net8.0/linux-x64/publish/saml-md-tool
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: 8.0.x
+      - name: Build
+        run: dotnet publish SamlMdTool -r win-x64  -p:PublishAOT=true -p:AssemblyName=saml-md-tool --configuration Release
+      - name: Upload the executable as artifact
+        uses: actions/upload-artifact@v3.1.0
+        with:
+          name: saml-md-tool
+          path: SamlMdTool/bin/Release/net8.0/win-x64/publish/saml-md-tool.exe
